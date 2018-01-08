@@ -6,7 +6,7 @@ const gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browserSync = require('browser-sync').create();
 
-
+//ordenar Reglas sass con csscomb
 gulp.task('sortsass', ()=>{
     gulp.src('./src/**/*.scss')
         .pipe(csscomb())

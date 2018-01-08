@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title AHMEDESSA.NET
-        link(rel="stylesheet", href="css/estilos.css")
-    body
-        include partials/hdr-Header/pug/_hdr-Header.pug
+extends pug/layout.pug  
 
-        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat eligendi, cupiditate reprehenderit expedita iusto voluptatibus similique quo quis culpa, veniam, unde nobis harum sequi blanditiis reiciendis ab. Delectus, voluptate officia?
-        a(href="#") otro enlace
+block styles
+    link(rel="stylesheet", href="css/estilos.css")
+
+block header
+    include pug/header.pug
+
+block scripts
+    script(src="js/jquery.min.js")
+    scirpt(src="app.js")

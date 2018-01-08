@@ -4,17 +4,18 @@ const gulp = require('gulp'),
     csscomb = require('gulp-csscomb'),
     pug = require('gulp-pug'),
     autoprefixer = require('gulp-autoprefixer'),
-    browserSync = require('browser-sync').create();
+    browserSync = require('browser-sync').create(),
+    gulpsync = require('gulp-sync')(gulp);
 
 //ordenar Reglas sass con csscomb
-gulp.task('sortsass', ()=>{
-    gulp.src('./src/**/*.scss')
+gulp.task('sortsass', () => {
+    return gulp.src('./src/**/*.scss')
         .pipe(csscomb())
         .pipe(gulp.dest('./src'));
-} );
+});
 
-gulp.task('sass', ['sortsass'], ()=>{
-    gulp.src('./src/*.scss')
+gulp.task('sass', gulpsync.sync(['sortsass']), () => {
+    return gulp.src('./src/*.scss')
         .pipe(sassGlob())
         .pipe(sass())
         .pipe(autoprefixer())
@@ -22,8 +23,8 @@ gulp.task('sass', ['sortsass'], ()=>{
         .pipe(browserSync.stream());
 });
 
-gulp.task('pug', ()=>{
-    gulp.src('./src/*.pug')
+gulp.task('pug', () => {
+    return gulp.src('./src/*.pug')
         .pipe(pug({
             'pretty': true,
             'compileDebug': true
@@ -31,16 +32,15 @@ gulp.task('pug', ()=>{
         .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('serve', ['sass', 'pug'], ()=> {
-   browserSync.init({
-       server: './dist'
-   });
+gulp.task('serve', gulpsync.sync(['sass', 'pug']), () => {
+    browserSync.init({
+        server: './dist'
+    });
 
-   gulp.watch('./src/**/*.scss', ['sass']);
-   gulp.watch('./src/*.pug', ['pug']);
-   gulp.watch('./src/**/*.pug', ['pug']);
-   gulp.watch('./dist/*.html').on('change', browserSync.reload);
+    gulp.watch('./src/**/*.scss', gulpsync.sync(['sass']));
+    gulp.watch('./src/*.pug', ['pug']);
+    gulp.watch('./src/**/*.pug', ['pug']);
+    gulp.watch('./dist/*.html').on('change', browserSync.reload);
 });
 
 gulp.task('default', ['serve']);
-

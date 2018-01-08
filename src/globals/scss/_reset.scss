@@ -1,0 +1,20 @@
+$patas: blue;
+$color: red;
+
+body {
+   color: $color;
+   h1 {
+      position: relative;
+      top: 100%;
+      left: 10px;
+
+      display: flex;
+
+      color: black;
+      background: red;
+
+      font-size: 18px;
+   }
+}
+
+$variable: green;
